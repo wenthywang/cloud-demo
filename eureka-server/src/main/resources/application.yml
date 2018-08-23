@@ -1,16 +1,32 @@
 spring:
   application:
-    name: eureka-server
-
+      name: eureka-server
+  profiles:
+      active: dev
 server:
-      port: 8762
-
+           port: 8762
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:${server.port}/eureka/
     fetch-registry: false
     register-with-eureka: false
+
+
+---
+spring:
+   profiles: dev
+logging:
+  path: D:/logs
+  level:
+        root: info
+---
+spring:
+   profiles: docker
+logging:
+  path: /usr/local/wwh/logs
+  level:
+        root: info
 
 
 
