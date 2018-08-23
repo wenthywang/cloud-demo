@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+    <div >
+  姓名：<input id="name" />
+年龄：<input id="age" />
+<div>
+<button onclick="submit()">
+提交
+</button>
+</div>
+    </div>
+    
+    <script type="text/javascript" src="//jxcdn.jiaxincloud.com/plugins/jquery.min.js"></script>
+<script type="text/javascript">
+ function submit(){
+	 var name=$("#name").val();
+	 var age=$("#age").val();
+	 var param={};
+	 param.name=name;
+	 param.age=age;
+	 $.ajax({
+	        type:"POST",
+	        url:"/people/",
+	     //   contentType: "application/json", //必须这样写
+	   //     dataType:"json",
+	     //   data:JSON.stringify(param),//schoolList是你要提交是json字符串
+	        data:param,//schoolList是你要提交是json字符串
+	        success:function (data) {
+	        	 if(data){
+	        		 if(data.status){
+	        			 alert("success");
+	        		 }else{
+	        			 alert("fail");
+	        		 }
+	        		 
+	        	
+	        	 }else{
+	        		 alert("fail");
+	        	 }
+	        	 
+	        	 
+	        }
+
+	    })
+ }
+ 
+</script>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: service-people
+  profiles:
+      active: dev
+  datasource:
+    url: jdbc:mysql://111.230.24.31:33060/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false
+    username: wenthywang
+    password: wwh13660783361
+    driver-class-name: com.mysql.jdbc.Driver
+    tomcat.max-active: 10
+    tomcat.min-idle: 1
+    tomcat.max-idle: 5
+
+---
+spring:
+  profiles: dev
+server:
+    port: 8081
+logging:
+  level:
+       root: info
+  path: D:/logs
+
+---
+spring:
+  profiles: docker
+server:
+  port: 8082
+logging:
+  path: /usr/local/wwh/logs
+  level:
+        root: info
+
+
