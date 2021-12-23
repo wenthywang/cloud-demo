@@ -9,10 +9,10 @@
     </parent>
 
 
-    <artifactId>eureka-server</artifactId>
+    <artifactId>cloud-admin</artifactId>
     <packaging>jar</packaging>
-    <name>eureka-server</name>
-    <description>eureka-server</description>
+    <name>cloud-admin</name>
+    <description>cloud-admin</description>
 
 
     <properties>
@@ -20,18 +20,32 @@
     </properties>
 
     <dependencies>
-       <dependency>
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-server</artifactId>
+            <version>2.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.jolokia</groupId>
+            <artifactId>jolokia-core</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 
     </dependencies>
+
 </project>

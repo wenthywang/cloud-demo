@@ -1,0 +1,58 @@
+spring:
+  application:
+      name: cloud-admin
+  profiles:
+    active: dev
+server:
+      port: 8766
+
+eureka:
+  instance:
+      leaseRenewalIntervalInSeconds: 30
+      health-check-url-path: /actuator/health
+ #     prefer-ip-address: true
+  client:
+      registryFetchIntervalSeconds: 15
+      serviceUrl:
+         defaultZone: http://wwh:wwh@111.230.24.31:8002/eureka,http://wwh:wwh@47.106.88.213:8002/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+
+security2:
+    user:
+      name: "wwh"
+      password: "wwh"
+
+
+---
+spring:
+   profiles: dev
+logging:
+  level:
+       root: info
+  path: D:/logs
+
+---
+spring:
+   profiles: docker
+logging:
+  path: /logs/
+  level:
+        root: info
+
+spring.security.user.name: ${security2.user.name}
+spring.security.user.password: ${security2.user.password}
+eureka.instance.metadata-map.user.name: ${security2.user.name}
+eureka.instance.metadata-map.user.password: ${security2.user.password}
+
+
+
+

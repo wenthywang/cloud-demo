@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <configuration>
+
     <jmxConfigurator/>
     <!--日志彩色打印-->
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
@@ -22,7 +24,6 @@
               value="[%d{'yyyy-MM-dd HH:mm:ss.SSS',GMT+8:00}] %-5p [%logger{36}][%L] %X{UUID} %X{USER}: %m%n"/>
     <property name="LOG_CHARSET" value="UTF-8"/>
 
-    <!-- <property name="LOG_PATH" value="${logging.path}" />-->
     <property name="COMMON_LOG" value="${LOG_PATH}/${APPLICTION_NAME}"/>
     <property name="ERROR_LOG" value="${LOG_PATH}/${APPLICTION_NAME}"/>
     <!-- 日志会保存180天，最大占用30GB，根据项目实际情况调整 -->
@@ -108,7 +109,7 @@
         <appender-ref ref="ERROR_LOG_FILE"/>
         <!-- 环境配置,使用Spring Boot Logback扩展，多个不同环境使用逗号隔开 -->
         <springProfile name="dev">
-            <appender-ref ref="CONSOLE"/>
+                  <appender-ref ref="CONSOLE"/>
         </springProfile>
     </root>
 </configuration>

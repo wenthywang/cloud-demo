@@ -1,0 +1,131 @@
+version: '3'
+services:
+  service-people:
+    image: "111.230.24.31:5000/service-people"
+    ports:
+    - "8001:8001"
+    environment:
+      JAVA_OPTS: -Xmx128m -Xms128m
+      SERVICE_HOST: service-people
+      SERVICE_PORT: 8001
+      REGISTRY_URL: http://wwh:wwh@eureka1:8002/eureka,http://wwh:wwh@eureka2:8002/eureka
+    volumes:
+    - /usr/local/wwh/logs:/logs
+    container_name: service-people
+    deploy:
+      mode: replicated
+      replicas: 1
+    extra_hosts:
+    - "eureka1:111.230.24.31"
+    - "eureka2:47.106.88.213"
+    - "cloud-config-server:111.230.24.31"
+    - "service-people:47.106.88.213"
+    - "cloud-gateway:47.106.88.213"
+
+  eureka-server1:
+    image: "111.230.24.31:5000/eureka-server"
+    ports:
+    - "8002:8002"
+    environment:
+      JAVA_OPTS: -Xmx128m -Xms128m
+      SERVICE_HOST: eureka1
+      SERVICE_PORT: 8002
+      REGISTRY_URL: http://wwh:wwh@eureka2:8002/eureka
+    volumes:
+    - /usr/local/wwh/logs:/logs
+    container_name: eureka-server1
+    deploy:
+      mode: replicated
+      replicas: 1
+    extra_hosts:
+    - "eureka2:47.106.88.213"
+    - "eureka1:111.230.24.31"
+    - "cloud-config-server:111.230.24.31"
+    - "service-people:47.106.88.213"
+    - "cloud-gateway:47.106.88.213"
+
+  eureka-server2:
+    image: "111.230.24.31:5000/eureka-server"
+    ports:
+    - "8002:8002"
+    environment:
+      JAVA_OPTS: -Xmx128m -Xms128m
+      SERVICE_HOST: eureka2
+      SERVICE_PORT: 8002
+      REGISTRY_URL: http://wwh:wwh@eureka1:8002/eureka
+    volumes:
+    - /usr/local/wwh/logs:/logs
+    container_name: eureka-server2
+    deploy:
+      mode: replicated
+      replicas: 1
+    extra_hosts:
+    - "eureka1:111.230.24.31"
+    - "eureka2:47.106.88.213"
+    - "cloud-config-server:111.230.24.31"
+    - "service-people:47.106.88.213"
+    - "cloud-gateway:47.106.88.213"
+
+  cloud-admin:
+    image: "111.230.24.31:5000/cloud-admin"
+    ports:
+    - "8003:8766"
+    environment:
+      JAVA_OPTS: -Xmx128m -Xms128m
+    volumes:
+    - /usr/local/wwh/logs:/logs
+    container_name: cloud-admin
+    deploy:
+      mode: replicated
+      replicas: 1
+    extra_hosts:
+    - "eureka2:47.106.88.213"
+    - "eureka1:111.230.24.31"
+    - "cloud-config-server:111.230.24.31"
+    - "service-people:47.106.88.213"
+    - "cloud-gateway:47.106.88.213"
+
+  cloud-config-server:
+    image: "111.230.24.31:5000/cloud-config-server"
+    ports:
+    - "8004:8004"
+    environment:
+      JAVA_OPTS: -Xmx128m -Xms128m
+      SERVICE_HOST: cloud-config-server
+      SERVICE_PORT: 8004
+      REGISTRY_URL: http://wwh:wwh@eureka1:8002/eureka,http://wwh:wwh@eureka2:8002/eureka
+    volumes:
+    - /usr/local/wwh/logs:/logs
+    container_name: cloud-config-server
+    deploy:
+      mode: replicated
+      replicas: 1
+    extra_hosts:
+    - "eureka2:47.106.88.213"
+    - "eureka1:111.230.24.31"
+    - "cloud-config-server:111.230.24.31"
+    - "service-people:47.106.88.213"
+    - "cloud-gateway:47.106.88.213"
+
+  cloud-gateway:
+    image: "111.230.24.31:5000/cloud-gateway"
+    ports:
+    - "8005:8005"
+    environment:
+      JAVA_OPTS: -Xmx128m -Xms128m
+      SERVICE_HOST: cloud-gateway
+      SERVICE_PORT: 8005
+      REGISTRY_URL: http://wwh:wwh@eureka1:8002/eureka,http://wwh:wwh@eureka2:8002/eureka
+    volumes:
+    - /usr/local/wwh/logs:/logs
+    container_name: cloud-gateway
+    deploy:
+      mode: replicated
+      replicas: 1
+    extra_hosts:
+    - "eureka1:111.230.24.31"
+    - "eureka2:47.106.88.213"
+    - "cloud-config-server:111.230.24.31"
+    - "service-people:47.106.88.213"
+    - "cloud-admin:47.106.88.213"
+

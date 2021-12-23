@@ -1,0 +1,75 @@
+spring:
+  application:
+    name: cloud-gateway
+  profiles:
+      active: dev
+  cloud:
+    config:
+      discovery:
+        service-id: cloud-config-server
+        enabled: true
+      label: master
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 30
+    health-check-url-path: /actuator/health
+  client:
+    registryFetchIntervalSeconds: 30
+    serviceUrl:
+      defaultZone: http://wwh:wwh@111.230.24.31:8002/eureka,http://wwh:wwh@47.106.88.213:8002/eureka
+feign:
+  hystrix:
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+---
+spring:
+  profiles: dev
+  cloud:
+    config:
+      profile: dev
+server:
+    port: 8005
+logging:
+  level:
+       root: info
+  path: D:/logs
+
+---
+spring:
+  profiles: docker
+  cloud:
+    config:
+      profile: prod
+logging:
+  path: /logs
+  level:
+        root: info
+server:
+  port: ${SERVICE_PORT}
+eureka:
+  instance:
+    hostname: ${SERVICE_HOST}
+    port: ${server.port}
+    leaseRenewalIntervalInSeconds: 30
+    health-check-url-path: /actuator/health
+  client:
+    serviceUrl:
+      defaultZone: ${REGISTRY_URL}
+    registryFetchIntervalSeconds: 30
+
+
+

@@ -1,13 +1,24 @@
 spring:
   application:
-      name: eureka-server
+    name: cloud-config-server
   profiles:
-    active: dev
-  security:
-      user:
-        name: wwh
-        password: wwh
-        roles: EUREKA-SERVER
+      active: dev
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/wenthywangtee/config-repo
+          username: 13660783361
+          password: Wwh13660783361
+          search-paths: /**
+      label: master
+
+logging:
+  level:
+    com.netflix.discovery: 'OFF'
+    org.springframework.cloud: 'DEBUG'
+
+
 management:
   endpoints:
     web:
@@ -18,26 +29,24 @@ management:
       show-details: always
 ---
 spring:
-   profiles: dev
+  profiles: dev
+server:
+    port: 8003
 logging:
   level:
        root: info
   path: D:/logs
-server:
-  port: 8762
 eureka:
-  environment: dev
-  client:
-    serviceUrl:
-      defaultZone: http://wwh:wwh@localhost:8762/eureka/
-    fetch-registry: false
-    register-with-eureka: false
   instance:
     leaseRenewalIntervalInSeconds: 30
     health-check-url-path: /actuator/health
+  client:
+    registryFetchIntervalSeconds: 30
+    serviceUrl:
+      defaultZone: http://wwh:wwh@111.230.24.31:8002/eureka,http://wwh:wwh@47.106.88.213:8002/eureka
 ---
 spring:
-   profiles: docker
+  profiles: docker
 logging:
   path: /logs
   level:
@@ -51,13 +60,15 @@ eureka:
     port: ${server.port}
     leaseRenewalIntervalInSeconds: 30
     health-check-url-path: /actuator/health
-
   client:
     serviceUrl:
       defaultZone: ${REGISTRY_URL}
   server:
     waitTimeInMsWhenSyncEmpty: 0
     enable-self-preservation: false
+
+
+
 
 
 
